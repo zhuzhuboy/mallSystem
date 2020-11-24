@@ -1,0 +1,25 @@
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1606129286746'); /* IE9 */
+  src: url('iconfont.eot?t=1606129286746#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAPsAAsAAAAACBQAAAOfAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqDbINMATYCJAMMCwgABCAFhG0HRhsiBxFVlL9kPxJjWzRn395u0QiRTcORux48T3bV+1XdgwUdHeyeg9VHM1oiOjhmNA0QQJB0++nvzwUIE6G65D/clGPZzqTd6aV5DLmdRSmEBOH4/++d/pYHOK9lubzbGJvGmPipE2AcUEBjbFtkBRKQN4xdeRGnIYAPCeQhHTr1GIALA2OSADJt8sTRuFI2jJpKwYXgKFlpIDsxcalNKh/Y4X9fflFPXKAwNcbMPhM6jqPN15ivKdr22gxzKeTjeQC2DjSQBxggI0p9Q9BhMg+Nj6Iz6gsdGAhqrIjXiy9TDY6V/vEUiAND5wc5WVp1UnJbDIGvKVKo5/zXgQPwBY4A3yEnrMaJERnqDhbzrqgwP7+lUlk5qLx8AHeL46ioGOhbVTVYjpfO8DDlxKeqv4/44ydnqjq/q7DQNT5ld8mqK5GB+w6FD/A7+xT7WPShS1uuxB45EXn4ecZSFNsflr+5l4MN9zp46toj38AtT26c6bH3rE/A5pz9hyMH9xRs6S1ajk2I5KqnomJoBgNUelVV1Zv9YaVadPL0EmeEOn1SLbHtDs4PWP+S9vrgHJBhy/Dly4eLSdweMtxua0s7y9PeOVE8HtrZLe3Rtthm5859+nTt9Hzu6nb6l/SxRQHJL9u+LPGnR8uT7eKDnu1v0yU1o92Ca4E+aSdpMqpXrGVvHJy8e92irYvW7Q5I4tZYa9Gc/+9jW8S+/z97xbGC4Bap3Y/27h3Va/rCHok/Dv9wCCKoZufk1Clq+3aF1FOpbYqK1VM9hLWFlixaKB6xsNlSJiKuJZ7zGAWAd5XepFeC96Xeodv83t/w2b+Hv5+/Pf7t8jUAqPvw4MsPeF+nvQPXzfsFP1PesslQlYZdT5bZMj2jDTZ9VQiR6/mF1QAh/vobwluXg3AJj0FxigfNJY1hcPLA5KsBOLi0Bh+5Ltb7CiWGZG4gxycAEeQblAAvQAvywzA4v2CK8A8OQWnwMaijHX1lNNnnZA6GiglEL5DH3JDl1EVQeYOpqUJJKn3eA0qXR8C1nGzmAhuUMeZ0j6mnSkDCNZyD87CqGFrhAmO1MtV2b9tU9iYr5rq30J5AIYUSIPIC5GKsQW57tch9/gZKGZWQ1NAqkg+Q6OTdA5fFacG40DWtaNfSv/Mo5VGK8DgiWA2cQw+qzCQDbfmwAoopS9Yj3tqzUStqq7PmN9TPtwPwYdygU6LFIPyXd2qiPGQ/M2EUNpRoxGZk5qL0egA=') format('woff2'),
+  url('iconfont.woff?t=1606129286746') format('woff'),
+  url('iconfont.ttf?t=1606129286746') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1606129286746#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-IOTtubiao_huabanfuben:before {
+  content: "\e61a";
+}
+
+.icon-user:before {
+  content: "\e622";
+}
+

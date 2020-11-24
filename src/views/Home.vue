@@ -1,18 +1,30 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-button @click="logout">退出</el-button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import { isValidate } from 'network/validate.js'
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  components: {},
+  // 路由独享守卫。通过判断sessionStorage有没有token来决定是否有权限跳转到该页面
+  beforeRouteEnter: (to, from, next) => {
+    const token = window.sessionStorage.getItem('user')
+    console.log(token)
+    if (!token) next('login')
+    isValidate().then(res => {
+      if (res.data.GOON) {
+        next()
+      }
+    })
+  },
+  methods: {
+    logout () {
+      window.sessionStorage.removeItem('user')
+      this.$router.replace('/login')
+    }
   }
 }
 </script>

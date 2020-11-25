@@ -1,0 +1,4 @@
+/* 取消二级菜单组的title默认padding */
+.el-menu-item-group__title{
+    padding: 0 !important;
+}

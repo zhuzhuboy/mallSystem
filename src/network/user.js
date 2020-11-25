@@ -1,9 +1,22 @@
 
 import { localRequest } from './base.js'
 
-export function getUser () {
+export function userLogin (data) {
+  console.log(data)
   return localRequest({
-    url: '/user/user.json',
-    methods: 'get'
+    method: 'post',
+    url: '/login',
+    data: {
+      username: data.user,
+      password: data.password
+    }
+  })
+}
+
+export function userList (data) {
+  return localRequest({
+    method: 'get',
+    url: '/users',
+    params: data
   })
 }

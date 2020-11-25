@@ -34,14 +34,13 @@
 
 <script>
 // 请求API
-import { getUser } from 'network/user.js'
+import { userLogin } from 'network/user.js'
 import logo from 'assets/logo.png'
 export default {
   name: 'Login',
   data () {
     // 验证用户名，自定义验证
     var checkUser = (rule, value, callback) => {
-      console.log(rule, value, callback)
       if (!value) {
         return callback(new Error('用户名不能为空'))
       }
@@ -57,13 +56,11 @@ export default {
     return {
       logo,
       formData: {
-        user: '',
-        password: ''
+        user: 'admin',
+        password: '123456'
       },
       rules: {
-        user: [
-          { validator: checkUser, trigger: 'blur' }
-        ],
+        user: [{ validator: checkUser, trigger: 'blur' }],
         password: [
           { required: true, message: '密码不能为空', trigger: 'blur' },
           { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
@@ -74,27 +71,35 @@ export default {
   methods: {
     unset (key) {
       // 拿到el-form实例
-      console.log(this.$refs[key])
       // 实例的resetFields方法会重置表单
       this.$refs[key].resetFields()
     },
     login (key) {
-      console.log(this.$refs[key])
-
+      // 表单验证是否成功
       this.$refs[key].validate(async isSucess => {
         if (isSucess === true) {
           console.log('成功')
-          const result = await getUser()
-          if (result.data.status === 'success') {
-            const sessionStorageItem = JSON.stringify(this.formData)
-            sessionStorage.setItem('user', sessionStorageItem)
+          // 调用登录接口
+          const result = await userLogin(this.formData)
+          // 成功了把token存起来。弹出消息。更改路由
+          if (result.meta.status === 200) {
+            sessionStorage.setItem('token', result.data.token)
+            // 把token存在vuex中
+            this.$store.dispatch('commitChangeToken', result.data.token)
+            // 弹出成功信息
             this.$Message({
               message: '登录成功。数据已存储',
               type: 'success'
             })
+            // 路由跳转
             this.$router.push('home')
+          } else {
+            // 请求接口成功，但是状态不为成功
+            this.$Message({
+              message: '用户名不存在',
+              type: 'info'
+            })
           }
-          console.log(result)
         } else {
           // 表单验证不通过
           console.log('不成功')
@@ -102,6 +107,7 @@ export default {
       })
     }
   }
+
 }
 </script>
 

@@ -11,19 +11,19 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ 'views/Login.vue')
   },
   {
     path: '/home',
     name: 'home',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ 'views/Home.vue')
-
+    component: () => import(/* webpackChunkName: "about" */ 'views/Home.vue'),
+    beforeEnter: (to, from, next) => {
+      // 判断有没有token
+      const token = window.sessionStorage.getItem('token')
+      // 没有则跳转到登录页面
+      if (!token) next('/login')
+      next()
+    }
   }
 ]
 

@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import 'assets/css/global.css'
+import 'assets/css/resetEleUI.css'
 import 'assets/iconfont/iconfont.css'
+
 // 这里按需引用组件
 import './plugin/elementUI'
 

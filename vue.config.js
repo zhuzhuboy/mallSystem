@@ -11,6 +11,7 @@ module.exports = {
         assets: path.resolve(__dirname, 'src/assets')
       }
     }
-  }
-
+  },
+  // 关闭eslint
+  lintOnSave: false
 }

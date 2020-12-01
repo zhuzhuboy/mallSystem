@@ -2,3 +2,30 @@
 .el-menu-item-group__title{
     padding: 0 !important;
 }
+/* 取消el-menu有边框。出现二级菜单菜单的时候会多出1px边框 */
+.el-menu{
+    border-right: 0px !important;
+}
+.el-table{
+    margin-top: 20px;
+}
+/* 解决表格边框线不能对齐 */
+body .el-table th.gutter {
+    display: table-cell !important
+}
+/* 表格内内容居中显示 */
+.el-table .cell{
+    display: flex !important;
+    justify-content: center;
+}
+/* user路由下面的表单样式重置 */
+.user .el-form-item__label{
+    width: 100px !important;
+}
+.user .el-form-item__content{
+    margin-left: 110px !important;
+}
+
+.user .el-form-item{
+    margin-top: 30px;
+}

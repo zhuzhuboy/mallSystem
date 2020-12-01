@@ -8,7 +8,8 @@ module.exports = {
         views: path.resolve(__dirname, 'src/views'),
         common: path.resolve(__dirname, 'src/common'),
         network: path.resolve(__dirname, 'src/network'),
-        assets: path.resolve(__dirname, 'src/assets')
+        assets: path.resolve(__dirname, 'src/assets'),
+        utils: path.resolve(__dirname, 'src/utils')
       }
     }
   },

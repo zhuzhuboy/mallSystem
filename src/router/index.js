@@ -23,7 +23,25 @@ const routes = [
       // 没有则跳转到登录页面
       if (!token) next('/login')
       next()
-    }
+    },
+    redirect:'/welcome',
+    children:[
+      {
+        path:"/welcome",
+        name: 'welcome',
+        component: () => import(/* webpackChunkName: "about" */ 'views/Welcome.vue'),
+      },
+      {
+        path:"/users",
+        name: 'user',
+        component: () => import(/* webpackChunkName: "about" */ 'views/user/User.vue'),
+      },
+      {
+        path:"/roles",
+        name: 'roles',
+        component: () => import(/* webpackChunkName: "about" */ 'views/user/Role.vue'),
+      }
+    ]
   }
 ]
 

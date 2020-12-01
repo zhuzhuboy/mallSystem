@@ -81,6 +81,7 @@ export default {
           console.log('成功')
           // 调用登录接口
           const result = await userLogin(this.formData)
+          console.log(result)
           // 成功了把token存起来。弹出消息。更改路由
           if (result.meta.status === 200) {
             sessionStorage.setItem('token', result.data.token)

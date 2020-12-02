@@ -18,7 +18,7 @@
 
     <!-- 修改用户对话框 -->
     <ModifyUserDialog @getUserList="getUserList" />
-    <input type="file" @change="uploadFile" ref="input" />
+    <input type="file" @change="uploadFile" ref="input" autocomplete="off" />
   </div>
 </template>
 

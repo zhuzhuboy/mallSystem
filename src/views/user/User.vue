@@ -14,32 +14,45 @@
     />
 
     <!-- 添加用户对话框 -->
-    <CardMain @getUserList="getUserList" @addFormRefFunc="addFormRefFunc" />
+    <AddUserDialog @getUserList="getUserList" @addFormRefFunc="addFormRefFunc" />
+
+    <!-- 修改用户对话框 -->
+    <ModifyUserDialog @getUserList="getUserList" />
+    <input type="file" @change="uploadFile" ref="input" />
   </div>
 </template>
 
 <script>
 import Breadcrumb from "components/user/Breadcrumb.vue";
 import Card from "components/user/Card.vue";
-import CardMain from "components/user/CardMain.vue";
+import AddUserDialog from "components/user/AddUserDialog.vue";
+import ModifyUserDialog from "components/user/ModifyUserDialog.vue";
 import { userList } from "network/user.js";
 import { modifyUserState } from "network/user.js";
 import { debounce } from "utils/tools";
-import {mapState} from 'vuex'
-
+import { mapState } from "vuex";
+import { mapActions } from "vuex";
 export default {
   name: "user",
+  computed: {
+    ...mapState("moduleB", {
+      names: "name"
+    })
+  },
   components: {
     Breadcrumb,
     Card,
-    CardMain
+    AddUserDialog,
+    ModifyUserDialog
   },
   created() {
+    console.log(this.names, "在User的created生命周期函数");
     //  得到用户列表
     this.getUserList();
   },
   data() {
     return {
+      name: "cuizhuo",
       queryInfo: {
         query: "",
         pagenum: 1,
@@ -52,6 +65,15 @@ export default {
     };
   },
   methods: {
+    uploadFile(e) {
+      console.log(e.target.files);
+      const file = this.$refs.input.files[0];
+      window.form = new FormData();
+      form.append("file", file);
+      console.log(form);
+      console.log(this.$refs.input.files[0]);
+    },
+    ...mapActions("moduleB", ["setNameAsync"]),
     // 改变queryInfo
     changeQueryInfo(obj) {
       const queryInfo = this.queryInfo;
@@ -59,7 +81,6 @@ export default {
         ...queryInfo,
         ...obj
       };
-
     },
     // 得到学生列表
     async getUserList() {

@@ -9,7 +9,9 @@
     />
 
     <!-- 表格 -->
-    <CardTable :users="users" :status="status" />
+    <CardTable :users="users" :status="status"
+     @getUserList="getUserList"
+     />
 
     <!-- 分页 -->
     <Pagination

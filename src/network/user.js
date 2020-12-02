@@ -43,3 +43,53 @@ export function addUserRequest(data) {
     }
   })
 }
+
+// 根据 ID 查询用户信息
+export function queryUserInfo(id) {
+  return localRequest({
+    method: 'get',
+    url: `users/${id}`,
+
+  })
+}
+
+//  编辑用户提交
+export function editUserInfo(option) {
+  return localRequest({
+    method: 'put',
+    url: `users/${option.id}`,
+    data:option
+  })
+}
+
+//  删除用户提交
+export function deleteUserInfo(option) {
+  return localRequest({
+    method: 'delete',
+    url: `users/${option.id}`,
+    data:option
+  })
+}
+
+//  分配角色
+export function assignUserRole(option) {
+  console.log(option)
+  console.log(`users/${option.id}/role`)
+  return localRequest({
+    method: 'delete',
+
+    url: `users/${option.id}/role`,
+    data:option
+  })
+}
+
+//  角色列表
+export function roleList(option) {
+
+  return localRequest({
+    method: 'get',
+    url: `roles`,
+  })
+}
+
+

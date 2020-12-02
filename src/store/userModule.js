@@ -1,8 +1,10 @@
 export default {
   namespaced:true,
   state: {
-    centerDialogVisible:false,
-    addFormRef:null
+    centerDialogVisible:false,//新增用户对话框的显示和隐藏
+    addFormRef:null,//保存的form实例
+    modifyDialogVisible:false,
+    currentUserInfo:null,//当前激活的用户（用于修改）
   },
   getters: {
 
@@ -14,8 +16,14 @@ export default {
     setDialogVisible(state, payload) {
       state.centerDialogVisible = payload
     },
+    setModifyDialogVisible(state, payload) {
+      state.modifyDialogVisible = payload
+    },
     setAddFormRef(state, payload) {
       state.addFormRef = payload
+    },
+    setCurrentUserInfo(state, payload){
+      state.currentUserInfo = payload
     }
   }
 }

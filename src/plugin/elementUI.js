@@ -23,7 +23,8 @@ import {
   Switch,
   Tooltip,
   Pagination,
-  Dialog
+  Dialog,
+  MessageBox
 } from 'element-ui'
 
 Vue.use(Button)
@@ -53,3 +54,5 @@ Vue.use(Dialog)
 
 
 Vue.prototype.$Message = Message
+Vue.prototype.$MessageBox = MessageBox
+

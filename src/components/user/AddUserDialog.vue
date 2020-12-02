@@ -40,63 +40,16 @@
 <script>
 import { mapState } from "vuex";
 import { addUserRequest } from "network/user.js";
+import {
+  checkUser,
+  checkEmail,
+  checkPhone,
+  checkPassword
+} from "utils/tools.js";
 export default {
-  name: "cardMain",
+  name: "addUserDialog",
   data() {
     // 验证用户名，自定义验证
-    var checkUser = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("用户名不能为空"));
-      }
-      setTimeout(() => {
-        var uPattern = /^[a-zA-Z0-9_-]{4,16}$/;
-        if (!uPattern.test(value)) {
-          callback(new Error("请输入4-16位数字字母组下划线组成的用户名"));
-        }
-        callback();
-      }, 100);
-    };
-    // 验证密码，自定义验证
-    var checkPassword = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("密码不能为空"));
-      }
-      setTimeout(() => {
-        var pPattern = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
-        if (!pPattern.test(value)) {
-          callback(new Error("最少6位，包括大写字母，数字，特殊字符"));
-        }
-        callback();
-      }, 100);
-    };
-    // 验证邮箱，自定义验证
-    var checkEmail = (rule, value, callback) => {
-      // 可以为空
-      if (!value) {
-        return callback();
-      }
-      setTimeout(() => {
-        var ePattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-        if (!ePattern.test(value)) {
-          callback(new Error("请输入正确邮箱格式"));
-        }
-        callback();
-      }, 100);
-    };
-    // 验证手机，自定义验证
-    var checkPhone = (rule, value, callback) => {
-      // 可以为空
-      if (!value) {
-        return callback();
-      }
-      setTimeout(() => {
-        var mPattern = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
-        if (!mPattern.test(value)) {
-          callback(new Error("请输入正确手机格式"));
-        }
-        callback();
-      }, 100);
-    };
     return {
       // form表单中绑定的数据
       addForm: {
@@ -134,6 +87,7 @@ export default {
       }
     };
   },
+
   computed: {
     // vuex保存的是否显示dialog数据。由于elementUI会修改该数据。所以设置了set属性
     centerDialogVisible: {
@@ -148,17 +102,16 @@ export default {
     // 监听数据
     centerDialogVisible(val) {
       // 当dialog显示并且父组件中addFormRef等于null时候。向父组件中传递过去。在nextTick中执行
-      if (val === true && this.$parent.addFormRef===null) {
+      if (val === true && this.$parent.addFormRef === null) {
         this.$nextTick(() => {
-          this.$emit('addFormRefFunc',this.$refs.addFormRef)
+          this.$emit("addFormRefFunc", this.$refs.addFormRef);
         });
-
       }
     }
   },
   methods: {
     changeDialogVisible() {
-      // 由于vuex使用了module模块，并且设置了命名空间。所以在使用mutation方法时候在前面加上 命名空间/ 
+      // 由于vuex使用了module模块，并且设置了命名空间。所以在使用mutation方法时候在前面加上 命名空间/
       this.$store.commit("userModule/setDialogVisible", false);
     },
     // form表单里面确认按钮

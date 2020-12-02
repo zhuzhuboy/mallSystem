@@ -70,6 +70,36 @@ export var checkPhone = (rule, value, callback) => {
   }, 100);
 };
 
+// 验证角色名称，自定义验证
+export var checkNick = (rule, value, callback) => {
+  // 可以为空
+  if (!value) {
+    return callback(new Error("密码不能为空"));
+  }
+  setTimeout(() => {
+    var mPattern = /^[\u4E00-\u9FA5-\w]{2,6}$/;
+    if (!mPattern.test(value)) {
+      callback(new Error("请输入正确角色名称"));
+    }
+    callback();
+  }, 100);
+};
+
+// 验证描述，自定义验证
+export var checkDesc = (rule, value, callback) => {
+  // 可以为空
+  if (!value) {
+    return callback(new Error("描述不能为空"));
+  }
+  setTimeout(() => {
+    var mPattern = /^[\u4E00-\u9FA5-\w]{2,12}$/;
+    if (!mPattern.test(value)) {
+      callback(new Error("请输入正确格式"));
+    }
+    callback();
+  }, 100);
+};
+
 // 请求数据
 /**
  * @param requestAPI 请求API
@@ -84,7 +114,7 @@ export async function requestValidate(requestAPI, option, successStatus, sucCB, 
   let result = await requestAPI(option);
   // 请求结果状态码是规定的状态码执行回调函数
   if (result.meta.status === successStatus) {
-    sucCB()
+    sucCB(result)
   } else {
     failCB()
   }

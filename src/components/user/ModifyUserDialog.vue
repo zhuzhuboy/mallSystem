@@ -71,12 +71,11 @@ export default {
     }
   },
   watch: {
-    modifyDialogVisible(val) {
-      if (val === true) {
-        console.log(this.userInfo);
-
+      // 如果vuex存储的用户信息更新了。并且修改用户的dialog显示。则data中定义的formInfo被修改。（数据回填）
+    userInfo(val) {
+      if (this.modifyDialogVisible === true) {
         this.formUserInfo = {
-          ...this.userInfo
+          ...val
         };
       }
     }

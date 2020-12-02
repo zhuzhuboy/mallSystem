@@ -83,13 +83,5 @@ export function assignUserRole(option) {
   })
 }
 
-//  角色列表
-export function roleList(option) {
-
-  return localRequest({
-    method: 'get',
-    url: `roles`,
-  })
-}
 
 

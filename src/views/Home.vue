@@ -14,7 +14,7 @@
       <!-- 侧边栏 -->
       <el-aside :width="isCollapse? '64px' : '200px'">
         <!-- 展开按钮 -->
-        <div class="toggle-button iconfont icon-zhankai" @click="toggleCollapse">&#xe786;</div>
+        <div class="toggle-button iconfont icon-zhankai" @click="toggleCollapse"></div>
         <!-- 菜单 -->
         <el-menu
           class="el-menu-vertical-demo"
@@ -152,16 +152,6 @@ export default {
 
 
 <style lang="scss" scoped>
-@font-face {
-  font-family: "iconfont"; /* project id 2223654 */
-  src: url("//at.alicdn.com/t/font_2223654_lc6z2kfh47b.eot");
-  src: url("//at.alicdn.com/t/font_2223654_lc6z2kfh47b.eot?#iefix")
-      format("embedded-opentype"),
-    url("//at.alicdn.com/t/font_2223654_lc6z2kfh47b.woff2") format("woff2"),
-    url("//at.alicdn.com/t/font_2223654_lc6z2kfh47b.woff") format("woff"),
-    url("//at.alicdn.com/t/font_2223654_lc6z2kfh47b.ttf") format("truetype"),
-    url("//at.alicdn.com/t/font_2223654_lc6z2kfh47b.svg#iconfont") format("svg");
-}
 
 .iconfont {
   padding-right: 6px;

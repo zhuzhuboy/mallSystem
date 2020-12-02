@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <!-- 面包屑 -->
-    <Breadcrumb />
+    <Breadcrumb path="/home" :breadcrumbList="breadcrumbList" />
     <!-- 卡片区域 -->
     <Card
       :queryInfo="queryInfo"
@@ -52,7 +52,7 @@ export default {
   },
   data() {
     return {
-      name: "cuizhuo",
+      breadcrumbList:['用户管理','用户列表'],
       queryInfo: {
         query: "",
         pagenum: 1,

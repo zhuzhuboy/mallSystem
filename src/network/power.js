@@ -37,13 +37,19 @@ export function modifyRole(option) {
 }
 
 // 删除角色
-
-export function deleteRole(id) {
-
+export function deleteRole(options) {
   return localRequest({
     method: 'delete',
-    url: `roles/${id}`,
+    url: `roles/${options.roleId}/rights/${options.rightId}`,
 
   })
 }
 
+// 所有权限列表
+
+export function AllPowerList(type) {
+  return localRequest({
+    method: 'get',
+    url: `rights/${type}`,
+  })
+}

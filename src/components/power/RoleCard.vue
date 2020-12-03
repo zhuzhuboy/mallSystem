@@ -1,7 +1,15 @@
 <template>
   <el-card>
     <el-table :data="roleList" stripe border style="width: 100%">
-      <el-table-column type="expand" label width="60"></el-table-column>
+      <!-- 扩展栏 -->
+      <el-table-column type="expand" label width="60">
+        <!-- 作用域插槽 -->
+        <template v-slot="expandProps" >
+          <!-- 扩展栏显示组件 -->
+          <ExpandBar :roleInfo="expandProps.row" @modifyExpandData="expandChange(expandProps.row)" />
+        </template>
+      </el-table-column>
+      <!-- 索引 -->
       <el-table-column type="index" label="#"></el-table-column>
       <el-table-column prop="roleName" label="角色名称"></el-table-column>
       <el-table-column prop="roleDesc" label="角色描述"></el-table-column>
@@ -23,16 +31,8 @@
             type="warning"
             icon="el-icon-setting"
             size="mini"
-            @click="deleteUser(slotProps.row.id)"
+            @click="distributionPower(slotProps.row)"
           >分配权限</el-button>
-          <!-- <el-tooltip content="分配角色" placement="top">
-          <el-button
-            type="warning"
-            icon="el-icon-setting"
-            size="mini"
-            @click="assignRole(slotProps.row)"
-          >分配权限</el-button>
-          </el-tooltip>-->
         </template>
       </el-table-column>
     </el-table>
@@ -40,26 +40,28 @@
 </template>
 
 <script>
-import { queryRoleById,deleteRole } from "network/power.js";
+import { queryRoleById, deleteRole,AllPowerList } from "network/power.js";
+import ExpandBar from "./ExpandBar.vue";
 import { requestValidate } from "utils/tools";
+
+
 export default {
   name: "roleCard",
+  components: {
+    ExpandBar
+  },
+  data() {
+    return {};
+  },
   props: {
+    // 角色信息。el-table使用（:data="roleList"）
     roleList: {
       type: Array
     }
   },
 
   methods: {
-    tagType(val) {
-      if (val == 0) {
-        return "";
-      } else if (val == 1) {
-        return "info";
-      } else if (val == 2) {
-        return "warning";
-      }
-    },
+    // 修改角色信息
     modifyRole(id) {
       this.$store.commit("roleModule/setModifyRoleDialog", true);
       //通过id获得用户信息,把用户信息保存到vuex中。
@@ -67,6 +69,7 @@ export default {
         this.$store.commit("roleModule/setCurrentRoleInfo", result.data);
       });
     },
+    // 删除角色
     async deleteRole(id) {
       const confirmResult = await this.$MessageBox
         .confirm("此操作将永久删除该角色, 是否继续?", "提示", {
@@ -78,9 +81,9 @@ export default {
       // confirmResult结果为字符串confirm表示确认。为字符串cancel表示取消
       if (confirmResult === "confirm") {
         //确认，调用请求顺带验证
-          requestValidate(
+        requestValidate(
           deleteRole,
-           id ,
+          id,
           200,
           () => {
             this.$emit("getRoleList");
@@ -94,22 +97,42 @@ export default {
         // 取消，则提示
         this.$Message.info("取消删除操作");
       }
+    },
+    // 分配权限
+    distributionPower(e){
+      // 得到第三级权限所有id值
+      let arr = [];
+      this.digui(e,arr);
+      arr = arr.filter(res=>res!=undefined)
+
+      this.$emit('getThirdPowerIdArr',arr)
+      // 对话框显示
+      this.$store.commit('roleModule/setDistributionPowerDialogVisible',true)
+      requestValidate(AllPowerList,'tree',200,(result)=>{
+        // 状态码是200后，把数据存储到vuex中
+        this.$store.commit('roleModule/setAllPowerList',result.data)
+      })
+    },
+    // 子组件触发事件： 参数是作用域插槽数据。也就是任务角色权限数据（修改el-table-column扩展栏里面作用域插槽里面的值)
+    expandChange(oldRolePowerData) {
+      // 从vuex中获得当前角色下最新的权限数据
+      let newData = this.$store.state.roleModule.newPowerData;
+      // 当前角色权限数据重新赋值
+      oldRolePowerData.children = newData;
+      console.log(oldRolePowerData)
+
+    },
+    digui(obj,arr=[]){
+      if(!Array.isArray(obj.children)){
+        return obj.id
+      }
+      obj.children.forEach(item=>{
+        arr.push(this.digui(item,arr))
+      })
     }
   }
 };
 </script>
 
 <style>
-.power-btn-blue {
-  background-color: rgba(53, 115, 231, 0.2);
-  color: rgb(53, 115, 231);
-}
-.power-btn-green {
-  background-color: rgba(45, 228, 115, 0.2);
-  color: rgb(45, 228, 11);
-}
-.power-btn-origin {
-  background-color: rgba(224, 196, 36, 0.2);
-  color: rgb(224, 196, 36);
-}
 </style>

@@ -116,6 +116,10 @@ export async function requestValidate(requestAPI, option, successStatus, sucCB, 
   if (result.meta.status === successStatus) {
     sucCB(result)
   } else {
-    failCB()
+    if(typeof failCB === 'function'){
+      failCB()
+    }else{
+      return new Error('请求出错了')
+    }
   }
 }

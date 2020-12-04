@@ -1,16 +1,18 @@
 <template>
   <div>
     <Breadcrumb path="/home" :breadcrumbList="breadcrumbList" />
+    <!-- 角色卡片 -->
     <RoleCard :roleList="roleList" @getRoleList="getRoleList"
-    @updateRoleList="updateRoleList"
     @getThirdPowerIdArr="getThirdPowerIdArr"
      />
+
     <!-- 修改角色对话框 -->
     <ModifyRoleDialog @getRoleList="getRoleList" />
 
     <!-- 分配权限对话框 -->
-    <DistributionPowerDialog :roleList="roleList"
+    <DistributionPowerDialog
     :thirdPowerIdArr="thirdPowerIdArr"
+    @getRoleList="getRoleList"
      />
   </div>
 </template>
@@ -35,21 +37,21 @@ export default {
     return {
       breadcrumbList: ["权限管理", "角色列表"],
       roleList: [],
+      // 得到三级权限id数组。el-tree默认选中的数组
       thirdPowerIdArr:[]
     };
   },
   methods: {
+    // 子组件通知父组件执行
     getThirdPowerIdArr(arr){
       this.thirdPowerIdArr=arr
     },
     getRoleList() {
       requestValidate(roleList, "", 200, result => {
-        this.updateRoleList(result.data)
+
+        this.roleList = result.data;
       });
     },
-    updateRoleList(data) {
-      this.roleList = data;
-    }
   },
   created() {
     this.getRoleList();

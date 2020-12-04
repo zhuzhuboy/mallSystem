@@ -4,7 +4,7 @@
       <!-- 扩展栏 -->
       <el-table-column type="expand" label width="60">
         <!-- 作用域插槽 -->
-        <template v-slot="expandProps" >
+        <template v-slot="expandProps">
           <!-- 扩展栏显示组件 -->
           <ExpandBar :roleInfo="expandProps.row" @modifyExpandData="expandChange(expandProps.row)" />
         </template>
@@ -40,18 +40,14 @@
 </template>
 
 <script>
-import { queryRoleById, deleteRole,AllPowerList } from "network/power.js";
+import { queryRoleById, deleteRole, AllPowerList } from "network/power.js";
 import ExpandBar from "./ExpandBar.vue";
 import { requestValidate } from "utils/tools";
-
 
 export default {
   name: "roleCard",
   components: {
     ExpandBar
-  },
-  data() {
-    return {};
   },
   props: {
     // 角色信息。el-table使用（:data="roleList"）
@@ -59,7 +55,12 @@ export default {
       type: Array
     }
   },
-
+  computed: {
+    // 得到
+    newData() {
+      return this.$store.state.roleModule.newPowerData;
+    }
+  },
   methods: {
     // 修改角色信息
     modifyRole(id) {
@@ -71,6 +72,7 @@ export default {
     },
     // 删除角色
     async deleteRole(id) {
+      // 删除提示框
       const confirmResult = await this.$MessageBox
         .confirm("此操作将永久删除该角色, 是否继续?", "提示", {
           confirmButtonText: "确定",
@@ -98,37 +100,45 @@ export default {
         this.$Message.info("取消删除操作");
       }
     },
-    // 分配权限
-    distributionPower(e){
-      // 得到第三级权限所有id值
-      let arr = [];
-      this.digui(e,arr);
-      arr = arr.filter(res=>res!=undefined)
+    // 分配权限按钮
+    distributionPower(data) {
+      console.log(data)
+      // 通过eventBus进行兄弟组件传递信息
+      this.$eventBus.$emit("getRoleInfo", data);
 
-      this.$emit('getThirdPowerIdArr',arr)
-      // 对话框显示
-      this.$store.commit('roleModule/setDistributionPowerDialogVisible',true)
-      requestValidate(AllPowerList,'tree',200,(result)=>{
-        // 状态码是200后，把数据存储到vuex中
-        this.$store.commit('roleModule/setAllPowerList',result.data)
-      })
+      // 存储第三级权限所有id值数组
+      let arr = [];
+      // 递归
+      console.log(arr)
+
+      this.digui(data, arr);
+      // 去除数据undefined。
+      arr = arr.filter(res => res != undefined);
+      // 通知父组件存储数组
+      this.$emit("getThirdPowerIdArr", arr);
+      // 控制对话框显示
+      this.$store.commit("roleModule/setDistributionPowerDialogVisible", true);
+      requestValidate(AllPowerList, "tree", 200, result => {
+        // 状态码是200后，把所有权限列表存储到vuex中。其他组件获取用于显示
+        this.$store.commit("roleModule/setAllPowerList", result.data);
+      });
     },
     // 子组件触发事件： 参数是作用域插槽数据。也就是任务角色权限数据（修改el-table-column扩展栏里面作用域插槽里面的值)
     expandChange(oldRolePowerData) {
-      // 从vuex中获得当前角色下最新的权限数据
-      let newData = this.$store.state.roleModule.newPowerData;
-      // 当前角色权限数据重新赋值
-      oldRolePowerData.children = newData;
-      console.log(oldRolePowerData)
 
+      // 当前角色权限数据重新赋值，赋值为从vuex中获得当前角色下最新的权限数据,该数据是被某个选项被删除，返回的最新数据
+      oldRolePowerData.children = this.newData;
     },
-    digui(obj,arr=[]){
-      if(!Array.isArray(obj.children)){
-        return obj.id
+    // 递归函数。
+    digui(obj, arr = []) {
+      // 判断对象children是否存在和是否是数组，如果不是则是最后一层。返回这个对象的id
+      if (obj.children===undefined) {
+        return obj.id;
       }
-      obj.children.forEach(item=>{
-        arr.push(this.digui(item,arr))
-      })
+      // 递归往数组添加id
+      obj.children.forEach(item => {
+        arr.push(this.digui(item, arr));
+      });
     }
   }
 };

@@ -115,23 +115,30 @@ export default {
 
     },
     assignRole(user) {
-      requestValidate(
-        assignUserRole,
-        {
-          id: user.id,
-          rid: "174",
-          mobile: user.mobile,
-          email: user.email
-        },
-        200,
-        () => {
-          this.$emit("getUserList");
-          this.$Message.success("设置角色成功");
-        },
-        () => {
-          this.$Message.error("设置角色成功失败");
-        }
-      );
+      console.log(user)
+      this.$eventBus.$emit('getCurrentUserInfo',user);
+      this.$store.commit('userModule/setDistributionRoleDialogVisible',true)
+      requestValidate(roleList,undefined,200,(res)=>{
+        this.$eventBus.$emit('getRoleInfoList',res.data);
+      })
+
+      // requestValidate(
+      //   assignUserRole,
+      //   {
+      //     id: user.id,
+      //     rid: "174",
+      //     mobile: user.mobile,
+      //     email: user.email
+      //   },
+      //   200,
+      //   () => {
+      //     this.$emit("getUserList");
+      //     this.$Message.success("设置角色成功");
+      //   },
+      //   () => {
+      //     this.$Message.error("设置角色成功失败");
+      //   }
+      // );
     }
   },
   created() {

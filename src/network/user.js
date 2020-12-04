@@ -34,11 +34,11 @@ export function addUserRequest(data) {
   return localRequest({
     method: 'post',
     url: '/users',
-    data:{
-      username:data.user,
-      password:data.password,
-      email:data.email,
-      mobile:data.phone,
+    data: {
+      username: data.user,
+      password: data.password,
+      email: data.email,
+      mobile: data.phone,
 
     }
   })
@@ -58,7 +58,7 @@ export function editUserInfo(option) {
   return localRequest({
     method: 'put',
     url: `users/${option.id}`,
-    data:option
+    data: option
   })
 }
 
@@ -67,7 +67,7 @@ export function deleteUserInfo(option) {
   return localRequest({
     method: 'delete',
     url: `users/${option.id}`,
-    data:option
+    data: option
   })
 }
 
@@ -79,9 +79,26 @@ export function assignUserRole(option) {
     method: 'delete',
 
     url: `users/${option.id}/role`,
-    data:option
+    data: option
   })
 }
 
+//角色列表
+export function roleList(option) {
+
+  return localRequest({
+    method: 'get',
+    url: `roles`,
+  })
+}
+
+//分配用户角色
 
 
+export function distributionUserRole(option) {
+  return localRequest({
+    method: 'put',
+    url: `users/${option.id}/role`,
+    data:option
+  })
+}

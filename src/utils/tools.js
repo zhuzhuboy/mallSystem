@@ -117,7 +117,7 @@ export async function requestValidate(requestAPI, option, successStatus, sucCB, 
     sucCB(result)
   } else {
     if(typeof failCB === 'function'){
-      failCB()
+      failCB(result)
     }else{
       return new Error('请求出错了')
     }

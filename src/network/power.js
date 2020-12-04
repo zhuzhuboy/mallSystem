@@ -46,10 +46,18 @@ export function deleteRole(options) {
 }
 
 // 所有权限列表
-
 export function AllPowerList(type) {
   return localRequest({
     method: 'get',
     url: `rights/${type}`,
+  })
+}
+
+// 角色授权
+export function roleGivePower(options) {
+  return localRequest({
+    method: 'post',
+    url: `roles/${options.roleId}/rights`,
+    data:options
   })
 }

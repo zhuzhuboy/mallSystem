@@ -10,7 +10,7 @@ import 'assets/iconfont/iconfont.css'
 import './plugin/elementUI'
 
 Vue.config.productionTip = false
-
+Vue.prototype.$eventBus = new Vue()
 new Vue({
   router,
   store,

@@ -19,6 +19,10 @@
     <!-- 修改用户对话框 -->
     <ModifyUserDialog @getUserList="getUserList" />
     <input type="file" @change="uploadFile" ref="input" autocomplete="off" multiple />
+
+    <!-- 分配角色对话框 -->
+    <SetRoleDialog
+    @getUserList="getUserList" />
   </div>
 </template>
 
@@ -27,6 +31,7 @@ import Breadcrumb from "components/user/Breadcrumb.vue";
 import Card from "components/user/Card.vue";
 import AddUserDialog from "components/user/AddUserDialog.vue";
 import ModifyUserDialog from "components/user/ModifyUserDialog.vue";
+import SetRoleDialog from "components/user/SetRoleDialog.vue";
 import { userList } from "network/user.js";
 import { modifyUserState } from "network/user.js";
 import { debounce } from "utils/tools";
@@ -43,7 +48,8 @@ export default {
     Breadcrumb,
     Card,
     AddUserDialog,
-    ModifyUserDialog
+    ModifyUserDialog,
+    SetRoleDialog
   },
   created() {
     console.log(this.names, "在User的created生命周期函数");
@@ -52,7 +58,7 @@ export default {
   },
   data() {
     return {
-      breadcrumbList:['用户管理','用户列表'],
+      breadcrumbList: ["用户管理", "用户列表"],
       queryInfo: {
         query: "",
         pagenum: 1,
@@ -61,7 +67,7 @@ export default {
       total: 0,
       users: [],
       status: [], //获取用户后保存状态和id的数组
-      addFormRef: null //子组件的ref引用。因为子组件（A）兄弟组件（B）需要用到(A)方法。所以提升在父组件中
+      addFormRef: null, //子组件的ref引用。因为子组件（A）兄弟组件（B）需要用到(A)方法。所以提升在父组件中
     };
   },
   methods: {

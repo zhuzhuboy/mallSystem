@@ -8,7 +8,9 @@ import 'assets/iconfont/iconfont.css'
 
 // 这里按需引用组件
 import './plugin/elementUI'
-
+// 这里倒入vue-table-width-tree-grid库
+import ZkTable from 'vue-table-with-tree-grid'
+Vue.component('TreeTable', ZkTable)
 Vue.config.productionTip = false
 Vue.prototype.$eventBus = new Vue()
 new Vue({

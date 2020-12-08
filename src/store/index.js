@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import userModule from './userModule.js'
 import roleModule from './roleModule.js'
+import goodsCategory from './goodsCategory'
 import moduleB from './moduleB.js'
 
 Vue.use(Vuex)
@@ -26,6 +27,7 @@ export default new Vuex.Store({
   modules: {
     userModule,
     roleModule,
+    goodsCategory,
     moduleB
   }
 })

@@ -100,6 +100,20 @@ export var checkDesc = (rule, value, callback) => {
   }, 100);
 };
 
+// 验证名称，自定义验证
+export var checkName = (rule, value, callback) => {
+  // 可以为空
+  if (!value) {
+    return callback(new Error("名称不能为空"));
+  }
+  setTimeout(() => {
+    var mPattern = /^[\u4E00-\u9FA5-\w]{2,12}$/;
+    if (!mPattern.test(value)) {
+      callback(new Error("请输入正确格式"));
+    }
+    callback();
+  }, 100);
+};
 // 请求数据
 /**
  * @param requestAPI 请求API

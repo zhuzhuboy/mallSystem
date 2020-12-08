@@ -29,6 +29,7 @@ export default {
       this.$emit('handleSizeChange',pagesize)
     },
     handleCurrentChange(pageNum){
+      console.log(pageNum)
       // 页码改变触发父组件handleCurrentChange事件，事件层层传递。最终改变页码。
       this.$emit('handleCurrentChange',pageNum)
     }

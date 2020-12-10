@@ -50,6 +50,11 @@ const routes = [
         path:"/categories",
         name: 'categories',
         component: () => import(/* webpackChunkName: "about" */ 'views/goods/category/GoodsCate.vue'),
+      },
+      {
+        path:"/params",
+        name: 'params',
+        component: () => import(/* webpackChunkName: "about" */ 'views/goods/params/GoodsParams.vue'),
       }
     ]
   }

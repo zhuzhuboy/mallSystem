@@ -29,3 +29,12 @@ body .el-table th.gutter {
 .user .el-form-item{
     margin-top: 30px;
 }
+
+/* 级联菜单的高度设置 */
+.el-cascader-panel {
+    height: 200px;
+}
+/* 级联菜单的overflow-x隐藏 */
+.el-scrollbar__wrap {
+    overflow-x: hidden !important;
+}

@@ -107,7 +107,7 @@ export var checkName = (rule, value, callback) => {
     return callback(new Error("名称不能为空"));
   }
   setTimeout(() => {
-    var mPattern = /^[\u4E00-\u9FA5-\w]{2,12}$/;
+    var mPattern = /^[\u4E00-\u9FA5-\w-\-\/]{2,18}$/;
     if (!mPattern.test(value)) {
       callback(new Error("请输入正确格式"));
     }

@@ -120,7 +120,7 @@ export default {
         cat_name: info.cat_name,
         cat_pid: info.cat_pid
       };
-      this.$emit("changeCurrentGoodsInfo", goodsInfo);
+      this.$emit("changeCurrentGoodsInfo", this.goodsInfo);
       this.$store.commit(
         "goodsCategory/setEditGoodsCategoryDialogVisible",
         true

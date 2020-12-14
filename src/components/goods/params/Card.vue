@@ -96,12 +96,12 @@ export default {
       // tabs标签页当前显示的页名称
       tabActiveName: "staticProp",
       staticTableData: [], //静态表格数据
-      staticTableCol: [{ label: "属性名称", props: "attr_name", id: "1" }],//静态表格列数据
+      staticTableCol: [{ label: "属性名称", props: "attr_name", id: "1" }], //静态表格列数据
       dynamicTableData: [], //动态表格数据
-      dynamicTableCol: [{ label: "参数名称", props: "attr_name", id: "1" }],//动态表格列数据
+      dynamicTableCol: [{ label: "参数名称", props: "attr_name", id: "1" }], //动态表格列数据
       addPorpParamdialog: false, //控制添加属性或参数对话框显示或隐藏的数据
       dialogTitle: "", //dialog的title
-      operationType: "",//对话框的执行逻辑的方式。（告诉对话框修改还是新增）
+      operationType: "", //对话框的执行逻辑的方式。（告诉对话框修改还是新增）
       currentPropsOrParams: {} //当前修改的属性或参数对象，根据id获取的最新数据
     };
   },
@@ -168,7 +168,8 @@ export default {
         this.$Message.success(res.meta.msg);
       });
     },
-    async handleDelectProps(props){
+    // 删除操作
+    async handleDelectProps(props) {
       let sel = props.attr_sel;
       let text;
       if (sel === "only") {
@@ -189,8 +190,8 @@ export default {
           attrid: props.attr_id
         };
         requestValidate(deleteParamsOrProps, options, 200, res => {
-          this.$Message.success(res.meta.msg)
-          this.getParamsData()
+          this.$Message.success(res.meta.msg);
+          this.getParamsData();
         });
       }
     },
@@ -204,6 +205,10 @@ export default {
       // 判断如果没有选中三级选项，则不进行操作
       let len = this.cascaderValue.length;
       if (len !== 3) {
+        //如果不是三级选项，静态属性表格数据和动态参数表格数据清空
+        this.cascaderValue=[]
+        this.staticTableData = [];
+        this.dynamicTableData = [];
         return;
       }
       // API请求的参数选项
@@ -212,6 +217,24 @@ export default {
         sel: this.tabActiveName === "staticProp" ? "only" : "many"
       };
       requestValidate(paramsList, options, 200, res => {
+        // 获取到数据后先进行处理，res的data对象的attr_vals处理为一个数组。表格的扩展栏渲染这部分数据
+        res.data.forEach((item, index) => {
+          // 如果返回时空字符串，则返回一个空数组
+          if (item.attr_vals === "") {
+            item.attr_vals = [];
+          } else {
+            // 如果返回的字符串是有逗号的则按照逗号进行分割
+            if (item.attr_vals.indexOf(",") !== -1) {
+              item.attr_vals = item.attr_vals.split(",");
+            } else {
+              // 按照空格分割
+              item.attr_vals = item.attr_vals.split(" ");
+            }
+          }
+          // 添加input显示或隐藏和双向绑定的数据值
+          item.inputVal = "";
+          item.inputVisible = false;
+        });
         // 判断当前是静态属性标签页，则给静态表格数据赋值
         if (this.tabActiveName === "staticProp") {
           this.staticTableData = res.data;
@@ -273,7 +296,7 @@ export default {
 .cat_opt {
   margin-top: 20px;
 }
-.el-cascader{
+.el-cascader {
   width: auto;
 }
 </style>
